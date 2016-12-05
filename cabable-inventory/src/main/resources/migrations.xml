@@ -1,0 +1,232 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <changeSet author="eros (generated)" id="1480517912716-1" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable catalogName="inventory" schemaName="inventory" tableName="cars">
+            <column defaultValue="" name="car_reg_id" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="white" name="color" type="VARCHAR(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="make" type="VARCHAR(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="model" type="VARCHAR(11)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="year" type="YEAR">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="has_ac" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="4" name="capacity" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="category" type="VARCHAR(15)"/>
+            <column name="states_permit_map" type="BIT(40)"/>
+            <column name="is_assigned" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_on" type="datetime(6)"/>
+            <column name="last_updated_on" type="datetime(6)"/>
+            <column name="operator_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-2" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable catalogName="inventory" schemaName="inventory" tableName="devices">
+            <column defaultValue="" name="device_make" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="device_model" type="VARCHAR(20)"/>
+            <column name="os_version" type="VARCHAR(20)"/>
+            <column defaultValue="" name="imei" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="device_phone_number" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="network_provider" type="VARCHAR(10)"/>
+            <column name="created_on" type="datetime(6)"/>
+            <column name="last_updated_on" type="datetime(6)"/>
+            <column name="operator_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-3" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable catalogName="inventory" schemaName="inventory" tableName="drivers">
+            <column defaultValue="" name="first_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="last_name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="photo" type="BLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="driver_license_no" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="license_photo" type="BLOB">
+                <constraints nullable="false"/>
+            </column>
+            <column name="age" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="M" name="gender" type="ENUM('M', 'F', 'O')">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="3" name="rating" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_on" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="updated_on" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="is_assigned" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="contact_num" type="INT"/>
+            <column name="operator_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-4" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable catalogName="inventory" schemaName="inventory" tableName="onboarding">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="driver_license_no" type="VARCHAR(50)"/>
+            <column defaultValue="" name="car_reg_id" type="VARCHAR(20)"/>
+            <column name="device_imei" type="INT"/>
+            <column name="operator_id" type="INT">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="0" name="is_complete" type="BIT(1)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="last_updated_on" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="created_on" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-5" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable catalogName="inventory" schemaName="inventory" tableName="operators">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column defaultValue="" name="name" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column  name="start_date" type="datetime(6)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="end_date" type="datetime(6)"/>
+            <column name="plan_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="logo" type="BLOB"/>
+            <column defaultValue="" name="documents_link" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="city" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="state" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="country" type="VARCHAR(25)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="website" type="VARCHAR(50)"/>
+            <column name="phone_number" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="phone_number_2" type="BIGINT"/>
+            <column defaultValue="" name="email_id" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="alternate_email_id" type="VARCHAR(50)"/>
+            <column name="address" type="VARCHAR(100)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-6" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable catalogName="inventory" schemaName="inventory" tableName="user">
+            <column defaultValue="" name="username" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="password" type="VARCHAR(16)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="client_id" type="VARCHAR(100)"/>
+            <column name="client_secret" type="VARCHAR(100)"/>
+            <column name="operator_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValueNumeric="1" name="isActive" type="BIT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="role" type="VARCHAR(10)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-7" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addPrimaryKey catalogName="inventory" columnNames="car_reg_id" constraintName="PRIMARY" schemaName="inventory" tableName="cars"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-8" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addPrimaryKey catalogName="inventory" columnNames="imei" constraintName="PRIMARY" schemaName="inventory" tableName="devices"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-9" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addPrimaryKey catalogName="inventory" columnNames="driver_license_no" constraintName="PRIMARY" schemaName="inventory" tableName="drivers"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-10" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addPrimaryKey catalogName="inventory" columnNames="username" constraintName="PRIMARY" schemaName="inventory" tableName="user"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-11" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addUniqueConstraint catalogName="inventory" columnNames="car_reg_id" constraintName="car_reg_id" schemaName="inventory" tableName="onboarding"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-12" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addUniqueConstraint catalogName="inventory" columnNames="contact_num" constraintName="contact_num" schemaName="inventory" tableName="drivers"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-13" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addUniqueConstraint catalogName="inventory" columnNames="operator_id" constraintName="operator_id" schemaName="inventory" tableName="cars"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-14" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addUniqueConstraint catalogName="inventory" columnNames="operator_id" constraintName="operator_id" schemaName="inventory" tableName="devices"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-15" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createIndex catalogName="inventory" indexName="operator" schemaName="inventory" tableName="drivers">
+            <column name="operator_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-16" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createIndex catalogName="inventory" indexName="operator_id" schemaName="inventory" tableName="onboarding">
+            <column name="operator_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-17" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createIndex catalogName="inventory" indexName="operator_id" schemaName="inventory" tableName="user">
+            <column name="operator_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-18" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addForeignKeyConstraint baseColumnNames="operator_id" baseTableCatalogName="inventory" baseTableName="cars" baseTableSchemaName="inventory" constraintName="car_operator" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableCatalogName="inventory" referencedTableName="operators"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-19" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addForeignKeyConstraint baseColumnNames="operator_id" baseTableCatalogName="inventory" baseTableName="user" baseTableSchemaName="inventory" constraintName="op" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableCatalogName="inventory" referencedTableName="operators"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-20" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addForeignKeyConstraint baseColumnNames="operator_id" baseTableCatalogName="inventory" baseTableName="drivers" baseTableSchemaName="inventory" constraintName="operator" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableCatalogName="inventory" referencedTableName="operators"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1480517912716-21" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addForeignKeyConstraint baseColumnNames="operator_id" baseTableCatalogName="inventory" baseTableName="devices" baseTableSchemaName="inventory" constraintName="ops" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableCatalogName="inventory" referencedTableName="operators"/>
+    </changeSet>
+</databaseChangeLog>

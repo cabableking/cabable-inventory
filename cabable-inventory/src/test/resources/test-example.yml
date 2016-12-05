@@ -1,0 +1,22 @@
+template: Hello, %s!
+defaultName: Stranger
+
+database:
+
+# the name of the JDBC driver, mysql in our case
+    driverClass: com.mysql.jdbc.Driver
+    # the username
+    user: root
+    # the password
+    password: eros@123
+   # the JDBC URL
+    url: jdbc:mysql://localhost:3306/inventory
+
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 0
+  adminConnectors:
+    - type: http
+      port: 0
