@@ -13,7 +13,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -22,41 +21,34 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @NamedQueries({
 	@NamedQuery(name="Operator.delete", query="delete from Operator where id=:id"),
 	@NamedQuery(name="Operator.getAll", query="select d from Operator d")
-	}
-)
+}
+		)
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Operator {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Basic(optional = false)
 	private long id ; 
 	@Column 
-	@NotNull
 	private String name ; 
 	@Column 
-	@NotNull
 	private String address ; 
 	@Column 
-	@NotNull
 	private long phone_number ; 
 	@Column 
 	private long phone_number_2 ; 
 	@Column 
-	@NotNull
 	private String email_id ; 
 	@Column 
 	private String alternate_email_id ; 
 	@Column 
 	private Date end_date ; 
 	@Column 
-	@NotNull
-	private String plan_id ; 
-	@Column 
 	@Lob
 	private byte[] logo ; 
 	@Column 
-	private String documents_link ; 
+	private byte[] documents_link ; 
 	@Transient 
 	private Date start_date ; 
 	@Column 
@@ -67,10 +59,10 @@ public class Operator {
 	private String country ; 
 	@Column 
 	private String website ;
-	
+
 	@Transient
 	private User userDetails;
-	
+
 	public long getId() {
 		return id;
 	}
@@ -83,7 +75,7 @@ public class Operator {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
+
 	public String getAddress() {
 		return address;
 	}
@@ -120,22 +112,16 @@ public class Operator {
 	public void setEnd_date(Date end_date) {
 		this.end_date = end_date;
 	}
-	public String getPlan_id() {
-		return plan_id;
-	}
-	public void setPlan_id(String plan_id) {
-		this.plan_id = plan_id;
-	}
 	public byte[] getLogo() {
 		return logo;
 	}
 	public void setLogo(byte[] logo) {
 		this.logo = logo;
 	}
-	public String getDocuments_link() {
+	public byte[] getDocuments_link() {
 		return documents_link;
 	}
-	public void setDocuments_link(String documents_link) {
+	public void setDocuments_link(byte[] documents_link) {
 		this.documents_link = documents_link;
 	}
 	public Date getStart_date() {
@@ -168,8 +154,8 @@ public class Operator {
 	public void setWebsite(String website) {
 		this.website = website;
 	}
-	
-	
+
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -196,6 +182,6 @@ public class Operator {
 	public void setUserDetails(User userDetails) {
 		this.userDetails = userDetails;
 	} 
-	
-	
+
+
 }

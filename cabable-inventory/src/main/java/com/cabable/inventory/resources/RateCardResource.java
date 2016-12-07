@@ -100,8 +100,7 @@ public class RateCardResource {
 	    @Timed(name = "post-get-plan")
 	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
-	    public List<Plan> plans(@Auth User user, @QueryParam(value="planname") String planname) {
-	    		DAOUtils.contextualizeDAO(user, dao);
+	    public List<Plan> plans(@Auth User user, @QueryParam(value="plantype") PlanType planname) {
 		        return plandao.get(planname);
 	    }
 	    

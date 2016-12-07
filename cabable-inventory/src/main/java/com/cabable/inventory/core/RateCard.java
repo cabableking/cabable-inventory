@@ -13,15 +13,18 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@NamedQueries({
-	@NamedQuery(name="RateCard.delete", query="delete from RateCard where rate_card_id=:rate_card_id")
-})
-@Entity(name="ratecardoperatormap")
+
+@Entity
+@Table(name="ratecardoperatormap")
 @JsonIgnoreProperties(ignoreUnknown=true)
+@NamedQueries({
+	@NamedQuery(name="RateCard.delete", query="delete from RateCard r where id=:rate_card_id and operator_id=:operator_id")
+})
 public class RateCard {
 
 	@Id
@@ -37,10 +40,9 @@ public class RateCard {
 	private long operator_id; 
 	
 	@ElementCollection
-	@OneToMany(cascade=CascadeType.ALL)
     @MapKeyColumn(name="key")
     @Column(name="value")
-    @CollectionTable(name="ratecard", joinColumns=@JoinColumn(name="rate_card_id" , referencedColumnName="id"))
+    @CollectionTable(name="ratecard", joinColumns=@JoinColumn(name="id" , referencedColumnName="rate_card_id"))
 	private Map<String, String> cardMap;
 
 	public long getRate_card_id() {

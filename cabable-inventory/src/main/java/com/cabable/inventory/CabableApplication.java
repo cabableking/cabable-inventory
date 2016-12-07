@@ -17,6 +17,8 @@ import com.cabable.inventory.core.Car;
 import com.cabable.inventory.core.Device;
 import com.cabable.inventory.core.Driver;
 import com.cabable.inventory.core.Operator;
+import com.cabable.inventory.core.Plan;
+import com.cabable.inventory.core.RateCard;
 import com.cabable.inventory.core.Relationship;
 import com.cabable.inventory.core.Role;
 import com.cabable.inventory.core.User;
@@ -45,6 +47,7 @@ import io.dropwizard.auth.oauth.OAuthCredentialAuthFilter;
 import io.dropwizard.configuration.EnvironmentVariableSubstitutor;
 import io.dropwizard.configuration.SubstitutingSourceProvider;
 import io.dropwizard.db.DataSourceFactory;
+import io.dropwizard.forms.MultiPartBundle;
 import io.dropwizard.hibernate.HibernateBundle;
 import io.dropwizard.hibernate.UnitOfWorkAwareProxyFactory;
 import io.dropwizard.migrations.MigrationsBundle;
@@ -61,7 +64,7 @@ public class CabableApplication extends Application<CabableConfiguration> {
 	}
 
 	private final HibernateBundle<CabableConfiguration> hibernateBundle =
-			new HibernateBundle<CabableConfiguration>(Car.class, Operator.class, Device.class, Driver.class, User.class, Relationship.class) {
+			new HibernateBundle<CabableConfiguration>(Car.class, Operator.class, Device.class, Driver.class, User.class, Relationship.class, Plan.class, RateCard.class) {
 		@Override
 		public DataSourceFactory getDataSourceFactory(CabableConfiguration configuration) {
 			return configuration.getDataSourceFactory();
@@ -100,6 +103,7 @@ public class CabableApplication extends Application<CabableConfiguration> {
 				return configuration.getViewRendererConfiguration();
 			}
 		});
+		bootstrap.addBundle(new MultiPartBundle());
 	}
 
 	@Override

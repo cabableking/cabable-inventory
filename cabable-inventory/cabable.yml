@@ -33,6 +33,9 @@ database:
 
     # whether or not idle connections should be validated
     checkConnectionWhileIdle: false
+    checkOnReturn: true
+	checkWhileIdle: true
+	checkOnBorrow: true
 
 # use the simple server factory if you only want to run on a single port
 #server:
