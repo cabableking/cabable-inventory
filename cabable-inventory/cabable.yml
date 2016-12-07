@@ -5,6 +5,7 @@ defaultName: ${DW_DEFAULT_NAME:-Stranger}
 # Database settings.
 database:
 
+
 # the name of the JDBC driver, mysql in our case
     driverClass: com.mysql.jdbc.Driver
     # the username
