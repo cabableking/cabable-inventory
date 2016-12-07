@@ -34,6 +34,7 @@ import com.qmino.miredot.annotations.MireDotIgnore;
 
 @Path("/oauth20")
 @MireDotIgnore
+@Consumes(MediaType.APPLICATION_JSON)
 public interface OAuthServer {
 
     @Path("/scopes")	
@@ -68,5 +69,10 @@ public interface OAuthServer {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     Response validateToken(@QueryParam("token") String token);
+    
+    @Path("/tokens/revoke")
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    Response revokeToken(OAuthTokenRevocationRequest request);
 
 }

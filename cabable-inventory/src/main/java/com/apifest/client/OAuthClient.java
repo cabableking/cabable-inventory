@@ -23,6 +23,7 @@ import javax.ws.rs.core.Response;
 import org.jboss.resteasy.client.jaxrs.ResteasyClient;
 import org.jboss.resteasy.client.jaxrs.ResteasyClientBuilder;
 import org.jboss.resteasy.client.jaxrs.ResteasyWebTarget;
+import org.json.JSONObject;
 
 import com.cabable.inventory.core.User;
 import com.cabable.inventory.db.UserDAO;
@@ -91,6 +92,15 @@ public class OAuthClient {
         Response response = target.proxy(OAuthServer.class).validateToken(accessToken);
         return response.readEntity(TokenValidationResponse.class);
     }
+    
+    public JSONObject removeToken(OAuthTokenRevocationRequest request) {
+        ResteasyClient client = new ResteasyClientBuilder().build();
+        ResteasyWebTarget target = client.target(oauthUrl);
+        Response response = target.proxy(OAuthServer.class).revokeToken(request);
+        return response.readEntity(JSONObject.class);
+    }
+    
+    
     
     @UnitOfWork
     public List<User> getUsers(User user){

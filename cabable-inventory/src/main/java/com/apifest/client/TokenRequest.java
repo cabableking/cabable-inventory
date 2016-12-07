@@ -16,7 +16,6 @@
 
 package com.apifest.client;
 
-import javax.validation.constraints.NotNull;
 import javax.ws.rs.FormParam;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -45,7 +44,6 @@ public class TokenRequest {
 	@FormParam("refresh_token")	
     private String refresh_token;
     
-	@NotNull
 	@FormParam("username")	
 	@JsonProperty("username")
 	private String username; 
@@ -55,7 +53,6 @@ public class TokenRequest {
 		return this.username;
 	}
 	
-	@NotNull
 	@JsonProperty("password")
 	@FormParam("password")
 	private String password;

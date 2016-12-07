@@ -5,14 +5,21 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-@Entity(name="plan")
+@Entity
+@Table(name="plan")
 @JsonIgnoreProperties(ignoreUnknown=true)
+@NamedQueries({
+	@NamedQuery(name="Plan.get", query="select p from Plan p where type=:type")
+})
 public class Plan {
 
 	@Id
@@ -22,6 +29,7 @@ public class Plan {
 	private String name;
 	
 	@Column
+	@Enumerated(EnumType.STRING)
 	private PlanType type;
 	
 	@Column

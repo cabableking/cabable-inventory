@@ -7,8 +7,11 @@ import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
 
 import com.cabable.inventory.core.Plan;
+import com.cabable.inventory.core.PlanType;
 
-public class PlanDAO extends ContextAwareDAO<Plan>{
+import io.dropwizard.hibernate.AbstractDAO;
+
+public class PlanDAO extends AbstractDAO<Plan>{
 	public PlanDAO(SessionFactory factory) {
         super(factory);
     }
@@ -21,9 +24,9 @@ public class PlanDAO extends ContextAwareDAO<Plan>{
         return persist(rc);
     }
     
-    public List<Plan> get(String planname) {
+    public List<Plan> get(PlanType planname) {
     	Criteria criteria = criteria();
-    	DAOUtils.addRestrictionIfNotNull(criteria, "name", planname);
+    	DAOUtils.addRestrictionIfNotNull(criteria, "type", planname);
     	return list(criteria);
     }
 

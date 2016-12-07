@@ -34,8 +34,7 @@ public class RateCardDAO extends ContextAwareDAO<RateCard>{
 
     public List<RateCard> getAll(RateCard rc) {
     	Criteria criteria = criteria();
-    	DAOUtils.addRestrictionIfNotNull(criteria, "rate_card_id", rc.getRate_card_id());
-    	DAOUtils.addRestrictionIfNotNull(criteria, "operator_id", this.getUser().getOperator_id());
+    	DAOUtils.addRestrictionIfNotNull(criteria, "id", rc.getRate_card_id());
     	return list(criteria);
     }
 

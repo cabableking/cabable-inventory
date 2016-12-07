@@ -8,5 +8,9 @@ public interface RateCardKeys {
 	public final static String APPLY_TWO_WAY ="applytwoway";
 	public final static String PRICE_PER_KM ="priceperkm";
 	public final static String PRICE_PER_MIN ="pricepermin";
+	public final static String RENTAL_CHARGE = "rental";
+	public final static String MIN_CHARGE = "mincharge";
 	public final static String TAXES ="taxes";
+	public final static String FLATFEES ="flatfees";
+
 }

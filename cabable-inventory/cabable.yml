@@ -5,6 +5,7 @@ defaultName: ${DW_DEFAULT_NAME:-Stranger}
 # Database settings.
 database:
 
+
 # the name of the JDBC driver, mysql in our case
     driverClass: com.mysql.jdbc.Driver
     # the username
@@ -33,6 +34,9 @@ database:
 
     # whether or not idle connections should be validated
     checkConnectionWhileIdle: false
+    checkOnReturn: true
+	checkWhileIdle: true
+	checkOnBorrow: true
 
 # use the simple server factory if you only want to run on a single port
 #server:

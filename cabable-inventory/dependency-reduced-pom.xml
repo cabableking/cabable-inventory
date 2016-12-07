@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.cabable</groupId>
   <artifactId>inventory</artifactId>
-  <name>Dropwizard Example Application</name>
+  <name>Cabable Inventory Application</name>
   <version>1.1</version>
   <prerequisites>
     <maven>3.0.0</maven>

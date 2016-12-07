@@ -27,6 +27,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -36,6 +37,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.RandomUtils;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -45,12 +47,14 @@ import com.apifest.client.OAuthClient;
 import com.apifest.client.OAuthScope;
 import com.apifest.client.OAuthScopeResponse;
 import com.apifest.client.OAuthTokenResponse;
+import com.apifest.client.OAuthTokenRevocationRequest;
 import com.apifest.client.TokenRequest;
 import com.apifest.client.TokenValidationResponse;
 import com.cabable.inventory.IgnoreOAuthFilter;
 import com.cabable.inventory.core.User;
 import com.cabable.inventory.db.UserDAO;
 
+import io.dropwizard.auth.Auth;
 import io.dropwizard.hibernate.UnitOfWork;
 import liquibase.exception.DatabaseException;
 
@@ -180,7 +184,11 @@ public class OAuth2Resource {
 	@Path("/refreshtoken")
 	@POST
 	@IgnoreOAuthFilter
-	public OAuthTokenResponse refreshToken(TokenRequest tokenRequest) {
+	/*
+	 * needs client_id, client_secret and refresh_token as json parameters. 
+	 * Other parameters are optional. 
+	 */
+	public OAuthTokenResponse refreshToken( TokenRequest tokenRequest) {
 		if(tokenRequest.getGrant_type()==null){
 			tokenRequest.setGrant_type("refresh_token");
 		}
@@ -198,6 +206,16 @@ public class OAuth2Resource {
 	public TokenValidationResponse validateToken(String accessToken) {
 		// TODO Auto-generated method stub
 		 return client.validateToken(accessToken);
+	}
+	
+	@Path("/logout")
+	@GET
+	public String logout(@Auth User user, @QueryParam("access_token") String accessToken) {
+		OAuthTokenRevocationRequest req = new OAuthTokenRevocationRequest();
+		req.setAccess_token(accessToken);
+		req.setClient_id(user.getClient_id());
+		JSONObject resp = client.removeToken(req);
+		return resp.get("revoked").toString();
 	}
 
 }
