@@ -13,7 +13,7 @@ database:
     # the password
     password: eros@123
    # the JDBC URL
-    url: jdbc:mysql://<SERVER-NAME>:3306/inventory
+    url: jdbc:mysql://104.199.218.25:3306/inventory
 
      # any properties specific to your JDBC driver:
     properties:
@@ -33,10 +33,10 @@ database:
     maxSize: 32
 
     # whether or not idle connections should be validated
-    checkConnectionWhileIdle: false
-    checkOnReturn: true
-	checkWhileIdle: true
-	checkOnBorrow: true
+    checkConnectionWhileIdle: true
+    checkConnectionOnReturn: true
+    checkConnectionOnBorrow: true
+
 
 # use the simple server factory if you only want to run on a single port
 #server:
@@ -120,11 +120,11 @@ metrics:
       frequency: 1m
 
 redis:
-  url: 127.0.0.1  
+  url: 35.165.93.72 
   username:
   password:
 
-oauthURL: http://<SERVER-NAME>:8088
+oauthURL: http://35.165.93.72:8088
 
 
 
