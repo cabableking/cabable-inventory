@@ -29,5 +29,5 @@ public abstract class ContextAwareDAO<E> extends AbstractDAO<E> {
 		Query query = super.namedQuery(queryName);
 		return query.setLong("operator_id", user.getOperator_id());
 	}
-
+	
 }

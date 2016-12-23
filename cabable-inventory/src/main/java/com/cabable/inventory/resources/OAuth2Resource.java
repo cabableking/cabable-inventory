@@ -27,7 +27,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
@@ -216,6 +215,22 @@ public class OAuth2Resource {
 		req.setClient_id(user.getClient_id());
 		JSONObject resp = client.removeToken(req);
 		return resp.get("revoked").toString();
+	}
+	
+	@Path("/changepassword")
+	@POST
+	@UnitOfWork
+	@Produces(MediaType.APPLICATION_JSON)
+	public String changePassword(@Auth User user, @QueryParam("new_password") String password){
+		int i=0;
+		if(user!=null && user.getId()!=0){
+			 i = dao.changePassword(user.getUsername(), user.getPassword(), password);
+		}
+		if(i>0){
+			return "Password changed successfully.";
+		}else{
+			throw new WebApplicationException("Password change failed");
+		}
 	}
 
 }

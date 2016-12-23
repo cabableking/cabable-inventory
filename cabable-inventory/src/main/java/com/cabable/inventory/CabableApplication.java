@@ -1,11 +1,15 @@
 package com.cabable.inventory;
 
+import java.util.EnumSet;
 import java.util.Map;
 
+import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 import com.apifest.client.OAuthClient;
@@ -108,6 +112,19 @@ public class CabableApplication extends Application<CabableConfiguration> {
 
 	@Override
 	public void run(CabableConfiguration configuration, Environment environment) {
+		
+		// Enable CORS headers
+	    final FilterRegistration.Dynamic cors =
+	        environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+
+	    // Configure CORS parameters
+	    cors.setInitParameter("allowedOrigins", "*");
+	    cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+	    cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+
+	    // Add URL mapping
+	    cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+	    
 		//initialize redis 
 		final OAuthRedisDAO redisDAO = new OAuthRedisDAO(configuration.getRedis());
 		if(!redisDAO.initializeScopes()){

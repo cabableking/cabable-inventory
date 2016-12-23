@@ -8,11 +8,13 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonRootName;
 
 @Entity
 @Table(name="user")
@@ -24,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 	}
 )
 @JsonIgnoreProperties(ignoreUnknown=true)
+@JsonRootName(value="user")
 public class User implements Principal {
 	
 	@Column
@@ -36,12 +39,15 @@ public class User implements Principal {
     private String username; 
 	
 	@Column
+	@JsonInclude(Include.NON_NULL)
     private String password;
 	
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private String client_id;
 	
 	@Column
+	@JsonInclude(Include.NON_NULL)
 	private String client_secret;
 	
 	@Column

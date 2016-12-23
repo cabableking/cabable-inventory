@@ -36,13 +36,13 @@ public class Car {
 	private boolean has_ac;
 	
 	@Column
-	private int capacity;
+	private long capacity;
 	
 	@Column
 	private String category;
 	
 	@Column
-	private int states_permit_map;
+	private long states_permit_map;
 	
 	@Column
 	private boolean is_assigned;
@@ -63,10 +63,11 @@ public class Car {
 		this.operator_id = operator_id;
 	}
 
-	public void setStates_permit_map(int states_permit_map) {
+	public void setStates_permit_map(long states_permit_map) {
 		this.states_permit_map = states_permit_map;
 	}
 
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -74,7 +75,7 @@ public class Car {
 		result = prime * result + ((car_reg_id == null) ? 0 : car_reg_id.hashCode());
 		return result;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -128,10 +129,10 @@ public class Car {
 	public void setHas_ac(boolean has_ac) {
 		this.has_ac = has_ac;
 	}
-	public int getCapacity() {
+	public long getCapacity() {
 		return capacity;
 	}
-	public void setCapacity(int capacity) {
+	public void setCapacity(long capacity) {
 		this.capacity = capacity;
 	}
 	public String getCategory() {
@@ -140,7 +141,7 @@ public class Car {
 	public void setCategory(String category) {
 		this.category = category;
 	}
-	public int getStates_permit_map() {
+	public long getStates_permit_map() {
 		return states_permit_map;
 	}
 	public boolean isIs_assigned() {

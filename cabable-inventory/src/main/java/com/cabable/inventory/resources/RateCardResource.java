@@ -1,4 +1,4 @@
-package com.cabable.inventory.resources;
+	package com.cabable.inventory.resources;
 
 
 import java.util.Arrays;

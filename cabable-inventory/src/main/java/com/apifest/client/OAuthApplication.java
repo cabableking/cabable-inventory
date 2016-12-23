@@ -27,11 +27,13 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 @JsonInclude(Include.NON_EMPTY)
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class OAuthApplication {
-	@NotNull
+	@JsonInclude(Include.NON_NULL)
     String name;
+	@JsonInclude(Include.NON_NULL)
     String description;
-    @NotNull
+	@JsonInclude(Include.NON_NULL)
     String scope;
+	@JsonInclude(Include.NON_NULL)
     String redirect_uri;
     @NotNull
     Integer status = 1;

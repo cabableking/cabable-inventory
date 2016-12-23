@@ -13,8 +13,13 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name="operators")
@@ -24,6 +29,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 }
 		)
 @JsonIgnoreProperties(ignoreUnknown=true)
+@XmlRootElement
 public class Operator {
 
 	@Id
@@ -35,19 +41,23 @@ public class Operator {
 	@Column 
 	private String address ; 
 	@Column 
-	private long phone_number ; 
+	private String phone_number ; 
 	@Column 
-	private long phone_number_2 ; 
+	@JsonInclude(Include.NON_NULL)
+	private String phone_number_2 ; 
 	@Column 
 	private String email_id ; 
 	@Column 
+	@JsonInclude(Include.NON_NULL)
 	private String alternate_email_id ; 
 	@Column 
 	private Date end_date ; 
 	@Column 
 	@Lob
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private byte[] logo ; 
 	@Column 
+	@JsonProperty(access = Access.WRITE_ONLY)
 	private byte[] documents_link ; 
 	@Transient 
 	private Date start_date ; 
@@ -61,6 +71,7 @@ public class Operator {
 	private String website ;
 
 	@Transient
+    @JsonProperty
 	private User userDetails;
 
 	public long getId() {
@@ -82,16 +93,16 @@ public class Operator {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public long getPhone_number() {
+	public String getPhone_number() {
 		return phone_number;
 	}
-	public void setPhone_number(long phone_number) {
+	public void setPhone_number(String phone_number) {
 		this.phone_number = phone_number;
 	}
-	public long getPhone_number_2() {
+	public String getPhone_number_2() {
 		return phone_number_2;
 	}
-	public void setPhone_number_2(long phone_number_2) {
+	public void setPhone_number_2(String phone_number_2) {
 		this.phone_number_2 = phone_number_2;
 	}
 	public String getEmail_id() {

@@ -19,11 +19,13 @@ public class RateCardDAO extends ContextAwareDAO<RateCard>{
     }
 
     public RateCard create(RateCard rc) {
+    	rc.setOperator_id(this.getUser().getOperator_id());
         return persist(rc);
     }
     
-    public RateCard update(RateCard op) {
-        return persist(op);
+    public RateCard update(RateCard rc) {
+    	rc.setOperator_id(this.getUser().getOperator_id());
+        return persist(rc);
     }
     
     public int delete(RateCard op){

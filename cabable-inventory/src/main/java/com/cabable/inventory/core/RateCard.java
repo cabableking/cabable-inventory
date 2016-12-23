@@ -2,17 +2,17 @@ package com.cabable.inventory.core;
 
 import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.MapKeyColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 
@@ -29,20 +29,25 @@ public class RateCard {
 
 	@Id
 	@NotNull
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long rate_card_id; 
 	
 	@Column 
 	@NotNull
-	private String name; 
+	private String rcname; 
 	
 	@Column
 	@NotNull
 	private long operator_id; 
 	
+	@Column
+	@NotNull
+	private long plan_id;
+	
 	@ElementCollection
-    @MapKeyColumn(name="key")
-    @Column(name="value")
-    @CollectionTable(name="ratecard", joinColumns=@JoinColumn(name="id" , referencedColumnName="rate_card_id"))
+    @MapKeyColumn(name="rckey")
+    @Column(name="rcvalue")
+    @CollectionTable(name="ratecard", joinColumns=@JoinColumn(name="rate_card_id" , referencedColumnName="rate_card_id"))
 	private Map<String, String> cardMap;
 
 	public long getRate_card_id() {
@@ -70,11 +75,19 @@ public class RateCard {
 	}
 
 	public String getName() {
-		return name;
+		return rcname;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setName(String rcname) {
+		this.rcname = rcname;
+	}
+
+	public long getPlan_id() {
+		return plan_id;
+	}
+
+	public void setPlan_id(long plan_id) {
+		this.plan_id = plan_id;
 	} 
 	
 }

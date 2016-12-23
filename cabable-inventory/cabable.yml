@@ -111,20 +111,14 @@ viewRendererConfiguration:
         strict_syntax: yes
         whitespace_stripping: yes
 
-metrics:
-  reporters:
-    - type: graphite
-      host: localhost
-      port: 2003
-      prefix: example
-      frequency: 1m
+
 
 redis:
-  url: 35.165.93.72 
+  url: 35.166.10.251
   username:
   password:
 
-oauthURL: http://35.165.93.72:8088
+oauthURL: http://52.77.220.58:8088
 
 
 
