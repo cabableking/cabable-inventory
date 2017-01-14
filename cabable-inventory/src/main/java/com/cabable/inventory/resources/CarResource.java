@@ -1,6 +1,7 @@
 package com.cabable.inventory.resources;
 
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
@@ -14,6 +15,7 @@ import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
+import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.MediaType;
 
 import org.slf4j.Logger;
@@ -50,8 +52,13 @@ public class CarResource {
 	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
-	    public Car createcar(@Auth User user,Car car) {
-	        return dao.create(car);
+	    public Serializable createcar(@Auth User user,Car car) {
+	    	try{
+	    		 return dao.create(car);
+	    	}catch(Exception e){
+	    		throw new WebApplicationException(e.getMessage());
+	    	}
+	       
 	    }
 
 	    @POST
@@ -62,7 +69,11 @@ public class CarResource {
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Car update(@Auth User user,Car Car) {
 	    	LOGGER.info("Updating:" +  Car ) ;
-	        return dao.update(Car);
+	    	try{
+	    		return dao.update(Car);
+	    	}catch(Exception e){
+	    		throw new WebApplicationException(e.getMessage());
+	    	}
 	    }
 	    
 	    @DELETE

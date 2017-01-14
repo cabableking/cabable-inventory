@@ -1,5 +1,6 @@
 package com.cabable.inventory.db;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -7,8 +8,6 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 
 import com.cabable.inventory.core.Car;
-
-import io.dropwizard.hibernate.AbstractDAO;
 
 public class CarDAO extends ContextAwareDAO<Car>{
 	public CarDAO(SessionFactory factory) {
@@ -19,8 +18,8 @@ public class CarDAO extends ContextAwareDAO<Car>{
         return Optional.ofNullable(get(id));
     }
 
-    public Car create(Car car) {
-        return persist(car);
+    public Serializable create(Car car) {
+    	return currentSession().save(car);
     }
 
     public Car update(Car Car) {

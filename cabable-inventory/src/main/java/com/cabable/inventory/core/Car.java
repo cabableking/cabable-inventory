@@ -1,5 +1,7 @@
 package com.cabable.inventory.core;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -8,6 +10,8 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="cars")
 @NamedQueries({
@@ -15,7 +19,8 @@ import javax.validation.constraints.Min;
 	@NamedQuery(name="Car.getAll", query="select d from Car d where operator_id=:operator_id")
 	}
 )
-public class Car {
+@JsonIgnoreProperties(ignoreUnknown=true)
+public class Car implements Serializable{
 	
 	@Id
 	private String car_reg_id;
@@ -51,8 +56,8 @@ public class Car {
 	@Min(1)
 	private long operator_id;
 	
-	@Column
-	private long rate_card_id;
+	@Column 
+	private PCategory parent_category;
 	
 	
 	public long getOperator_id() {
@@ -151,11 +156,11 @@ public class Car {
 		this.is_assigned = is_assigned;
 	}
 
-	public long getrate_card_id() {
-		return rate_card_id;
+	public PCategory getParent_category() {
+		return parent_category;
 	}
 
-	public void setrate_card_id(long rate_card_id) {
-		this.rate_card_id = rate_card_id;
+	public void setParent_category(PCategory parent_category) {
+		this.parent_category = parent_category;
 	}
 }

@@ -1,10 +1,17 @@
 package com.cabable.inventory.core;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Min;
 
@@ -38,6 +45,14 @@ public class Relationship {
 	
 	@Column
 	private boolean is_complete;
+	
+//	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "ratecardonboardingmap")
+//    @JoinTable(
+//            name = "ratecardonboardingmap",
+//            joinColumns = @JoinColumn(name = "onboarding_id"),
+//            inverseJoinColumns = @JoinColumn(name = "ratecard_id")
+//    )
+//	List<String> rate_card_ids;
 
 	public Relationship(long operator_id){
 		this.operator_id = operator_id;

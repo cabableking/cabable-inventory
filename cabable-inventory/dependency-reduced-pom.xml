@@ -70,7 +70,7 @@
           </execution>
         </executions>
         <configuration>
-          <organizationId>88c57d8a-00ab-42c4-9822-daa739b317e1</organizationId>
+          <organizationId>f6abdb8f-ad5e-4f4b-9b21-3fd4873f7fc1</organizationId>
           <restModel>
             <restFramework>
               <name>jax-rs</name>
