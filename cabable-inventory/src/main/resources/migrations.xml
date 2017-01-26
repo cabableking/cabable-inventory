@@ -1,6 +1,6 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
-    <changeSet author="eros (generated)" id="1480517912716-1" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-1" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <createTable catalogName="inventory" schemaName="inventory" tableName="cars">
             <column defaultValue="" name="car_reg_id" type="VARCHAR(20)">
                 <constraints nullable="false"/>
@@ -33,19 +33,20 @@
             <column name="operator_id" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
+            <column name="parent_category" type="VARCHAR(11)"/>
         </createTable>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-2" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-2" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <createTable catalogName="inventory" schemaName="inventory" tableName="devices">
             <column defaultValue="" name="device_make" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
             <column name="device_model" type="VARCHAR(20)"/>
             <column name="os_version" type="VARCHAR(20)"/>
-            <column defaultValue="" name="imei" type="VARCHAR(16)">
+            <column name="imei" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
-            <column name="device_phone_number" type="INT UNSIGNED">
+            <column name="device_phone_number" type="BIGINT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
             <column defaultValue="" name="network_provider" type="VARCHAR(10)"/>
@@ -54,9 +55,10 @@
             <column name="operator_id" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
+            <column name="is_assigned" type="BIT"/>
         </createTable>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-3" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-3" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <createTable catalogName="inventory" schemaName="inventory" tableName="drivers">
             <column defaultValue="" name="first_name" type="VARCHAR(50)">
                 <constraints nullable="false"/>
@@ -91,35 +93,36 @@
             <column name="is_assigned" type="BIT(1)">
                 <constraints nullable="false"/>
             </column>
-            <column name="contact_num" type="INT"/>
+            <column name="contact_num" type="BIGINT"/>
             <column name="operator_id" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
+            <column name="address" type="VARCHAR(100)"/>
         </createTable>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-4" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-4" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <createTable catalogName="inventory" schemaName="inventory" tableName="onboarding">
             <column autoIncrement="true" name="id" type="INT UNSIGNED">
                 <constraints primaryKey="true"/>
             </column>
             <column defaultValue="" name="driver_license_no" type="VARCHAR(50)"/>
             <column defaultValue="" name="car_reg_id" type="VARCHAR(20)"/>
-            <column name="device_imei" type="INT"/>
-            <column name="operator_id" type="INT">
+            <column name="device_imei" type="BIGINT"/>
+            <column name="operator_id" type="BIGINT">
                 <constraints nullable="false"/>
             </column>
             <column defaultValueNumeric="0" name="is_complete" type="BIT(1)">
                 <constraints nullable="false"/>
             </column>
-            <column name="last_updated_on" type="datetime(6)">
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="last_updated_on" type="TIMESTAMP(19)">
                 <constraints nullable="false"/>
             </column>
-            <column name="created_on" type="datetime(6)">
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="created_on" type="TIMESTAMP(19)">
                 <constraints nullable="false"/>
             </column>
         </createTable>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-5" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-5" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <createTable catalogName="inventory" schemaName="inventory" tableName="operators">
             <column autoIncrement="true" name="id" type="INT UNSIGNED">
                 <constraints primaryKey="true"/>
@@ -127,15 +130,12 @@
             <column defaultValue="" name="name" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
-            <column  name="start_date" type="datetime(6)">
+            <column defaultValueComputed="CURRENT_TIMESTAMP" name="start_date" type="TIMESTAMP(19)">
                 <constraints nullable="false"/>
             </column>
-            <column name="end_date" type="datetime(6)"/>
-            <column name="plan_id" type="INT UNSIGNED">
-                <constraints nullable="false"/>
-            </column>
+            <column name="end_date" type="TIMESTAMP(19)"/>
             <column name="logo" type="BLOB"/>
-            <column defaultValue="" name="documents_link" type="VARCHAR(50)">
+            <column name="documents_link" type="LONGBLOB">
                 <constraints nullable="false"/>
             </column>
             <column defaultValue="" name="city" type="VARCHAR(25)">
@@ -148,10 +148,10 @@
                 <constraints nullable="false"/>
             </column>
             <column name="website" type="VARCHAR(50)"/>
-            <column name="phone_number" type="BIGINT">
+            <column defaultValue="" name="phone_number" type="VARCHAR(20)">
                 <constraints nullable="false"/>
             </column>
-            <column name="phone_number_2" type="BIGINT"/>
+            <column name="phone_number_2" type="VARCHAR(20)"/>
             <column defaultValue="" name="email_id" type="VARCHAR(50)">
                 <constraints nullable="false"/>
             </column>
@@ -159,7 +159,49 @@
             <column name="address" type="VARCHAR(100)"/>
         </createTable>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-6" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-6" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable catalogName="inventory" schemaName="inventory" tableName="plan">
+            <column autoIncrement="true" name="id" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="type" type="ENUM('INTERNORM', 'INTRANORM', 'INTERRENTAL', 'INTRARENTAL', 'FLATFEES')"/>
+            <column name="description" type="VARCHAR(50)"/>
+            <column name="rate_card_keys" type="VARCHAR(100)"/>
+            <column name="name" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1485459047498-7" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable catalogName="inventory" schemaName="inventory" tableName="ratecard">
+            <column name="rate_card_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column defaultValue="" name="rckey" type="VARCHAR(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rcvalue" type="VARCHAR(20)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1485459047498-8" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable catalogName="inventory" schemaName="inventory" tableName="ratecardonboardingmap">
+            <column name="rate_card_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+            <column name="onboarding_id" type="INT UNSIGNED">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1485459047498-9" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createTable catalogName="inventory" schemaName="inventory" tableName="ratecardoperatormap">
+            <column autoIncrement="true" name="rate_card_id" type="INT UNSIGNED">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="operator_id" type="INT UNSIGNED"/>
+            <column name="rcname" type="VARCHAR(20)"/>
+            <column name="plan_id" type="INT"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1485459047498-10" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <createTable catalogName="inventory" schemaName="inventory" tableName="user">
             <column defaultValue="" name="username" type="VARCHAR(20)">
                 <constraints nullable="false"/>
@@ -172,61 +214,88 @@
             <column name="operator_id" type="INT UNSIGNED">
                 <constraints nullable="false"/>
             </column>
-            <column defaultValueNumeric="1" name="isActive" type="BIT">
+            <column defaultValueNumeric="1" name="isActive" type="BIT(1)">
                 <constraints nullable="false"/>
             </column>
             <column name="role" type="VARCHAR(10)"/>
         </createTable>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-7" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-11" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <addPrimaryKey catalogName="inventory" columnNames="car_reg_id" constraintName="PRIMARY" schemaName="inventory" tableName="cars"/>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-8" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-12" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <addPrimaryKey catalogName="inventory" columnNames="imei" constraintName="PRIMARY" schemaName="inventory" tableName="devices"/>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-9" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-13" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <addPrimaryKey catalogName="inventory" columnNames="driver_license_no" constraintName="PRIMARY" schemaName="inventory" tableName="drivers"/>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-10" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-14" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <addPrimaryKey catalogName="inventory" columnNames="username" constraintName="PRIMARY" schemaName="inventory" tableName="user"/>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-11" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-15" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <addUniqueConstraint catalogName="inventory" columnNames="car_reg_id" constraintName="car_reg_id" schemaName="inventory" tableName="onboarding"/>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-12" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-16" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <addUniqueConstraint catalogName="inventory" columnNames="contact_num" constraintName="contact_num" schemaName="inventory" tableName="drivers"/>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-13" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
-        <addUniqueConstraint catalogName="inventory" columnNames="operator_id" constraintName="operator_id" schemaName="inventory" tableName="cars"/>
+    <changeSet author="eros (generated)" id="1485459047498-17" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createIndex catalogName="inventory" indexName="onboarding_id" schemaName="inventory" tableName="ratecardonboardingmap">
+            <column name="onboarding_id"/>
+        </createIndex>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-14" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
-        <addUniqueConstraint catalogName="inventory" columnNames="operator_id" constraintName="operator_id" schemaName="inventory" tableName="devices"/>
-    </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-15" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-18" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <createIndex catalogName="inventory" indexName="operator" schemaName="inventory" tableName="drivers">
             <column name="operator_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-16" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-19" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createIndex catalogName="inventory" indexName="operator_id" schemaName="inventory" tableName="devices">
+            <column name="operator_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1485459047498-20" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <createIndex catalogName="inventory" indexName="operator_id" schemaName="inventory" tableName="onboarding">
             <column name="operator_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-17" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-21" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createIndex catalogName="inventory" indexName="operator_id" schemaName="inventory" tableName="ratecardoperatormap">
+            <column name="operator_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1485459047498-22" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <createIndex catalogName="inventory" indexName="operator_id" schemaName="inventory" tableName="user">
             <column name="operator_id"/>
         </createIndex>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-18" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
-        <addForeignKeyConstraint baseColumnNames="operator_id" baseTableCatalogName="inventory" baseTableName="cars" baseTableSchemaName="inventory" constraintName="car_operator" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableCatalogName="inventory" referencedTableName="operators"/>
+    <changeSet author="eros (generated)" id="1485459047498-23" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createIndex catalogName="inventory" indexName="ops" schemaName="inventory" tableName="cars">
+            <column name="operator_id"/>
+        </createIndex>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-19" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-24" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createIndex catalogName="inventory" indexName="rate_card_id" schemaName="inventory" tableName="ratecard">
+            <column name="rate_card_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1485459047498-25" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <createIndex catalogName="inventory" indexName="rate_card_id" schemaName="inventory" tableName="ratecardonboardingmap">
+            <column name="rate_card_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1485459047498-26" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <addForeignKeyConstraint baseColumnNames="operator_id" baseTableCatalogName="inventory" baseTableName="user" baseTableSchemaName="inventory" constraintName="op" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableCatalogName="inventory" referencedTableName="operators"/>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-20" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+    <changeSet author="eros (generated)" id="1485459047498-27" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
         <addForeignKeyConstraint baseColumnNames="operator_id" baseTableCatalogName="inventory" baseTableName="drivers" baseTableSchemaName="inventory" constraintName="operator" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableCatalogName="inventory" referencedTableName="operators"/>
     </changeSet>
-    <changeSet author="eros (generated)" id="1480517912716-21" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
-        <addForeignKeyConstraint baseColumnNames="operator_id" baseTableCatalogName="inventory" baseTableName="devices" baseTableSchemaName="inventory" constraintName="ops" deferrable="false" initiallyDeferred="false" onDelete="CASCADE" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableCatalogName="inventory" referencedTableName="operators"/>
+    <changeSet author="eros (generated)" id="1485459047498-28" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addForeignKeyConstraint baseColumnNames="rate_card_id" baseTableCatalogName="inventory" baseTableName="ratecard" baseTableSchemaName="inventory" constraintName="ratecard_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="rate_card_id" referencedTableCatalogName="inventory" referencedTableName="ratecardoperatormap"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1485459047498-29" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addForeignKeyConstraint baseColumnNames="operator_id" baseTableCatalogName="inventory" baseTableName="ratecardoperatormap" baseTableSchemaName="inventory" constraintName="ratecardoperatormap_ibfk_1" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableCatalogName="inventory" referencedTableName="operators"/>
+    </changeSet>
+    <changeSet author="eros (generated)" id="1485459047498-30" objectQuotingStrategy="QUOTE_ALL_OBJECTS">
+        <addForeignKeyConstraint baseColumnNames="rate_card_id" baseTableCatalogName="inventory" baseTableName="ratecardonboardingmap" baseTableSchemaName="inventory" constraintName="rc" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="rate_card_id" referencedTableCatalogName="inventory" referencedTableName="ratecardoperatormap"/>
     </changeSet>
 </databaseChangeLog>
