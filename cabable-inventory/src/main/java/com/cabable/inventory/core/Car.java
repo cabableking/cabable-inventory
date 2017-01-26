@@ -16,11 +16,13 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="cars")
 @NamedQueries({
 	@NamedQuery(name="Car.delete", query="delete from Car where car_reg_id=:car_reg_id and operator_id=:operator_id"),
-	@NamedQuery(name="Car.getAll", query="select d from Car d where operator_id=:operator_id")
+	@NamedQuery(name="Car.getAll", query="select d from Car d where operator_id=:operator_id"),
+	@NamedQuery(name="Car.get", query="select d from Car d where operator_id=:operator_id and car_reg_id=:car_reg_id")
+
 	}
 )
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Car implements Serializable{
+public class Car extends ContextAwareEntity{
 	
 	@Id
 	private String car_reg_id;

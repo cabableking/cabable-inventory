@@ -178,6 +178,7 @@ public class OperatorResource {
 	    @Path("get")
 	    @Timed(name = "post-get-Operator")
 	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
+	    @RolesAllowed({"SUPERADMIN"})
 	    @UnitOfWork
 	    public Operator get(@Auth User user,@QueryParam("id") long id) {
     		DAOUtils.contextualizeDAO(user, dao);
@@ -188,6 +189,7 @@ public class OperatorResource {
 	    
 	    @GET
 	    @Path("getAll")
+	    @RolesAllowed({"SUPERADMIN", "ADMIN"})
 	    @Timed(name = "post-get-Operator")
 	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
@@ -213,7 +215,7 @@ public class OperatorResource {
 	    		oauthclient.updateApplication(application, userList.get(0).getClient_id());
 	    		return Response.ok().status(200).build();
 	    	}else{
-	    		throw new WebApplicationException("User could not be activated, user does not exist.");
+	    		throw new WebApplicationException("User could not be activated, user does not exist.", Response.Status.NOT_FOUND);
 	    	}
 	    	
 	    }

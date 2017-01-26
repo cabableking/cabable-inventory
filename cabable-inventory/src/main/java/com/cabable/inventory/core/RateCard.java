@@ -14,6 +14,7 @@ import javax.persistence.MapKeyColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -25,7 +26,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @NamedQueries({
 	@NamedQuery(name="RateCard.delete", query="delete from RateCard r where id=:rate_card_id and operator_id=:operator_id")
 })
-public class RateCard {
+public class RateCard extends ContextAwareEntity{
 
 	@Id
 	@NotNull
@@ -37,11 +38,7 @@ public class RateCard {
 	private String rcname; 
 	
 	@Column
-	@NotNull
-	private long operator_id; 
-	
-	@Column
-	@NotNull
+	@Min(value=1)
 	private long plan_id;
 	
 	@ElementCollection
@@ -58,6 +55,8 @@ public class RateCard {
 		this.rate_card_id = rate_card_id;
 	}
 
+	@Column
+	@NotNull
 	public long getOperator_id() {
 		return operator_id;
 	}

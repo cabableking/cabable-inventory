@@ -16,7 +16,7 @@ public class DriverDAO extends ContextAwareDAO<Driver>{
     }
 
     public Optional<Driver> findById(String id) {
-        return Optional.ofNullable(get(id));
+        return Optional.ofNullable(list(namedQuery("Driver.get").setString("driver_license_no", id)).get(0));
     }
 
     public Driver create(Driver driver) {

@@ -1,23 +1,27 @@
 package com.cabable.inventory.core;
 
-import java.util.List;
+import java.sql.Date;
+import java.util.HashSet;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
+
+import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
+@DynamicUpdate(value=true)
 @Table(name="onboarding")
 @NamedQueries(
 		{
@@ -25,14 +29,12 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 		}
 )
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class Relationship {
+public class Relationship extends ContextAwareEntity{
 
 	@Id
-	private int id;
-	
-	@Column
-	@Min(1)
-	private long operator_id;
+	@Column(updatable=false)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private long id;
 	
 	@Column
 	private String car_reg_id;
@@ -46,26 +48,35 @@ public class Relationship {
 	@Column
 	private boolean is_complete;
 	
-//	@OneToMany(cascade = CascadeType.ALL , fetch = FetchType.LAZY, mappedBy = "ratecardonboardingmap")
-//    @JoinTable(
-//            name = "ratecardonboardingmap",
-//            joinColumns = @JoinColumn(name = "onboarding_id"),
-//            inverseJoinColumns = @JoinColumn(name = "ratecard_id")
-//    )
-//	List<String> rate_card_ids;
+	@Column(updatable=false)
+	private Date last_updated_on;
+	
+	@Column(updatable=false)
+	private Date created_on;
+
+	
+	@ElementCollection
+	@CollectionTable(name = "ratecardonboardingmap",
+			joinColumns=@JoinColumn(name="onboarding_id"))
+    @Column(name="rate_card_id")
+	private Set<String> rate_card_ids = new HashSet<>();
 
 	public Relationship(long operator_id){
 		this.operator_id = operator_id;
 	}
 	
-	public int getId() {
+	public Relationship() {
+		// TODO Auto-generated constructor stub
+	}
+ 	public long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 
+	@Column
 	public long getOperator_id() {
 		return operator_id;
 	}
@@ -106,6 +117,29 @@ public class Relationship {
 		this.is_complete = is_complete;
 	}
 	
+	public Set<String> getRate_card_ids() {
+		return rate_card_ids;
+	}
+
+	public Date getLast_updated_on() {
+		return last_updated_on;
+	}
+
+	public void setLast_updated_on(Date last_updated_on) {
+		this.last_updated_on = last_updated_on;
+	}
+
+	public Date getCreated_on() {
+		return created_on;
+	}
+
+	public void setCreated_on(Date created_on) {
+		this.created_on = created_on;
+	}
+
+	public void setRate_card_ids(Set<String> rate_card_ids) {
+		this.rate_card_ids.addAll(rate_card_ids);
+	}
 	
 	
 }

@@ -58,16 +58,16 @@ public class OAuthRedisDAO {
 	
 	public boolean initializeScopes(){
 		
-		for(Role role: Role.values()){
-			   Map<String, String> scopeMap = new HashMap<String, String>();
-		        scopeMap.put("id", role.toString());
-		        scopeMap.put(Role.DESCRIPTION_FIELD, role.getDescription());
-		        scopeMap.put(Role.CC_EXPIRES_IN_FIELD, String.valueOf(role.getCc_expires_in()));
-		        scopeMap.put(Role.PASS_EXPIRES_IN_FIELD, String.valueOf(role.getPass_expires_in()));
-		        scopeMap.put(Role.REFRESH_EXPIRES_IN_FIELD, String.valueOf(role.getRefresh_expires_in()));
-		        jedis.hmset(SCOPE_CREDENTIALS_PREFIX_NAME + role.toString(), scopeMap);
-		}
-		
+//		for(Role role: Role.values()){
+//			   Map<String, String> scopeMap = new HashMap<String, String>();
+//		        scopeMap.put("id", role.toString());:
+//		        scopeMap.put(Role.DESCRIPTION_FIELD, role.getDescription());
+//		        scopeMap.put(Role.CC_EXPIRES_IN_FIELD, String.valueOf(role.getCc_expires_in()));
+//		        scopeMap.put(Role.PASS_EXPIRES_IN_FIELD, String.valueOf(role.getPass_expires_in()));
+//		        scopeMap.put(Role.REFRESH_EXPIRES_IN_FIELD, String.valueOf(role.getRefresh_expires_in()));
+//		        jedis.hmset(SCOPE_CREDENTIALS_PREFIX_NAME + role.toString(), scopeMap);
+//		}
+//		
 		return true;
 	}
 

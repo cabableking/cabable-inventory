@@ -3,6 +3,8 @@ package com.cabable.inventory.auth;
 import java.util.List;
 import java.util.Optional;
 
+import javax.ws.rs.WebApplicationException;
+
 import com.apifest.client.OAuthClient;
 import com.apifest.client.TokenValidationResponse;
 import com.cabable.inventory.core.User;
@@ -30,14 +32,14 @@ public class OAuthAuthenticator implements Authenticator<String, User> {
         		if(!list.isEmpty()){
         			user = list.get(0);
         		}else{
-        			throw new AuthenticationException("Cannot correlate any user with this access token. Invalid access token. Kidhar se churaya ? ");
+        			throw new WebApplicationException("Cannot correlate any user with this access token. Invalid access token. Kidhar se churaya ? ", 401);
         		}
         		return Optional.of(user);
     		}else{
-        		throw new AuthenticationException("Incorrect access token. Go fuck yourself");
+        		throw new WebApplicationException("Incorrect access token. ", 401);
         	}
     	}else{
-    		throw new AuthenticationException("Incorrect access token. Go fuck yourself");
+    		throw new WebApplicationException("Incorrect access token. ", 401);
     	}
     	
     }

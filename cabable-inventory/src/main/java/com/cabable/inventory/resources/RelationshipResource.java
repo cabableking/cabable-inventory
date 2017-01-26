@@ -1,6 +1,8 @@
 package com.cabable.inventory.resources;
 
 
+import java.io.Serializable;
+import java.sql.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -46,13 +48,14 @@ public class RelationshipResource {
 	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
-	    public int startonboarding(@Auth User user) {
+	    public Serializable startonboarding(@Auth User user) {
     		DAOUtils.contextualizeDAO(user, dao);
 	    	if(user.getOperator_id()==0){
 	    		throw new WebApplicationException("Operator Id is missing for adding user", 400);
 	    	}
-	    	Relationship rel = dao.create(new Relationship(user.getOperator_id()));
-	    	return rel.getId();
+	    	Relationship relCr = new Relationship(user.getOperator_id());
+	    	relCr.setCreated_on(new Date(System.currentTimeMillis()));
+	    	return dao.create(relCr);
 	    }
 	    
 	    @POST
@@ -62,6 +65,9 @@ public class RelationshipResource {
 	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public Relationship update(@Auth User user,Relationship rel) {
+	    	if(rel.getId()==0){
+	    		throw new WebApplicationException("Onboarding ID is a mandatory parameter", 400);
+	    	}
     		DAOUtils.contextualizeDAO(user, dao);
 	    	LOGGER.info("Updating:" +  rel ) ;
 	        return dao.update(rel);

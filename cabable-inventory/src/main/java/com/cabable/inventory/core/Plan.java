@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @NamedQueries({
 	@NamedQuery(name="Plan.get", query="select p from Plan p where type=:type")
 })
-public class Plan {
+public class Plan extends ContextAwareEntity{
 
 	@Id
 	private long id;

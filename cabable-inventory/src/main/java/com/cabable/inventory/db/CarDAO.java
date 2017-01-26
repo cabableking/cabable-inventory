@@ -15,7 +15,7 @@ public class CarDAO extends ContextAwareDAO<Car>{
     }
 
     public Optional<Car> findById(String id) {
-        return Optional.ofNullable(get(id));
+        return Optional.ofNullable(list(namedQuery("Car.get").setString("car_reg_id", id)).get(0));
     }
 
     public Serializable create(Car car) {
@@ -29,7 +29,7 @@ public class CarDAO extends ContextAwareDAO<Car>{
     public int delete(Car car){
     	Query query =  namedQuery("Car.delete");
     	query.setString("car_reg_id", car.getCar_reg_id());
-    	query.setLong("operator_id", car.getOperator_id());
+    	query.setLong("operator_id", this.getUser().getOperator_id());
     	return query.executeUpdate();
     }
 

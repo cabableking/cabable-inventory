@@ -68,7 +68,7 @@ public class CabableApplication extends Application<CabableConfiguration> {
 	}
 
 	private final HibernateBundle<CabableConfiguration> hibernateBundle =
-			new HibernateBundle<CabableConfiguration>(Car.class, Operator.class, Device.class, Driver.class, User.class, Relationship.class, Plan.class, RateCard.class) {
+			new HibernateBundle<CabableConfiguration>(Car.class, Operator.class, Device.class, Driver.class, User.class, Relationship.class, Plan.class, RateCard.class, String.class) {
 		@Override
 		public DataSourceFactory getDataSourceFactory(CabableConfiguration configuration) {
 			return configuration.getDataSourceFactory();

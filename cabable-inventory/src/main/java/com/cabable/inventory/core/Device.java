@@ -14,10 +14,12 @@ import javax.validation.constraints.Min;
 @Table(name="devices")
 @NamedQueries({
 	@NamedQuery(name="Device.delete", query="delete from Device where imei=:imei and operator_id=:operator_id"),
-	@NamedQuery(name="Device.getAll", query="select d from Device d where operator_id=:operator_id")
+	@NamedQuery(name="Device.getAll", query="select d from Device d where operator_id=:operator_id"),
+	@NamedQuery(name="Device.get", query="select d from Device d where operator_id=:operator_id and imei=:imei")
+
 	}
 )
-public class Device {
+public class Device extends ContextAwareEntity{
 
 	@Column 
 	private String device_make; 
@@ -29,7 +31,7 @@ public class Device {
 	@Column(nullable = false, columnDefinition = "INT(16) UNSIGNED")
 	private long imei; 
 	@Column(columnDefinition = "UNSIGNED INT(20)")
-	private int device_phone_number; 
+	private long device_phone_number; 
 	@Column 
 	private String network_provider; 
 	@Column 
@@ -39,9 +41,6 @@ public class Device {
 	@Column
 	private boolean is_assigned;
 	
-	@Min(1)
-	@Column(columnDefinition = "UNSIGNED INT(11)")
-	private long operator_id;
 
 	public String getDevice_make() {
 		return device_make;
@@ -67,10 +66,10 @@ public class Device {
 	public void setImei(long imei) {
 		this.imei = imei;
 	}
-	public int getDevice_phone_number() {
+	public long getDevice_phone_number() {
 		return device_phone_number;
 	}
-	public void setDevice_phone_number(int device_phone_number) {
+	public void setDevice_phone_number(long device_phone_number) {
 		this.device_phone_number = device_phone_number;
 	}
 	public String getNetwork_provider() {
@@ -91,6 +90,9 @@ public class Device {
 	public void setLast_updated_on(Date last_updated_on) {
 		this.last_updated_on = last_updated_on;
 	}
+	
+	@Min(1)
+	@Column(columnDefinition = "UNSIGNED INT(11)")
 	public long getOperator_id() {
 		return operator_id;
 	}

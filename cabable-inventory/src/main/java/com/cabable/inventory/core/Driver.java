@@ -17,10 +17,11 @@ import javax.validation.constraints.Min;
 @Table(name="drivers")
 @NamedQueries({
 	@NamedQuery(name="Driver.delete", query="delete from Driver where driver_license_no=:driver_license_no and operator_id=:operator_id"),
-	@NamedQuery(name="Driver.getAll", query="select d from Driver d where operator_id=:operator_id")
+	@NamedQuery(name="Driver.getAll", query="select d from Driver d where operator_id=:operator_id"),
+	@NamedQuery(name="Driver.get", query="select d from Driver d where operator_id=:operator_id and driver_license_no=:driver_license_no")
 	}
 )
-public class Driver {
+public class Driver extends ContextAwareEntity{
 
 	@Column 
 	private String    first_name ; 
@@ -57,11 +58,11 @@ public class Driver {
 	private boolean     is_assigned ; 
 	
 	@Column 
-	private int     contact_num ; 
+	private long     contact_num ; 
 	
-	@Column(nullable=false, columnDefinition = "UNSIGNED INT(11)")
-	@Min(1)
-	private long     operator_id ;
+	
+	@Column
+	private String address;
 
 	public String getFirst_name() {
 		return first_name;
@@ -151,14 +152,16 @@ public class Driver {
 		this.is_assigned = is_assigned;
 	}
 
-	public int getContact_num() {
+	public long getContact_num() {
 		return contact_num;
 	}
 
-	public void setContact_num(int contact_num) {
+	public void setContact_num(long contact_num) {
 		this.contact_num = contact_num;
 	}
 
+	@Column(nullable=false, columnDefinition = "UNSIGNED INT(11)")
+	@Min(1)
 	public long getOperator_id() {
 		return operator_id;
 	}
@@ -190,6 +193,14 @@ public class Driver {
 		} else if (!driver_license_no.equals(other.driver_license_no))
 			return false;
 		return true;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	} 
 
 	

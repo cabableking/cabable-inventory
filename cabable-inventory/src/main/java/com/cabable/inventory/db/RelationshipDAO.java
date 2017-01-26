@@ -1,5 +1,6 @@
 package com.cabable.inventory.db;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,8 +19,8 @@ public class RelationshipDAO extends ContextAwareDAO<Relationship>{
         return Optional.ofNullable(get(id));
     }
 
-    public Relationship create(Relationship relationship) {
-        return persist(relationship);
+    public Serializable create(Relationship relationship) {
+        return save(relationship);
     }
 
     public Relationship update(Relationship relationship) {

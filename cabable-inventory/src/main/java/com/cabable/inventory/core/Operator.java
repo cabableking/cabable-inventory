@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonProperty.Access;
 		)
 @JsonIgnoreProperties(ignoreUnknown=true)
 @XmlRootElement
-public class Operator {
+public class Operator extends ContextAwareEntity{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

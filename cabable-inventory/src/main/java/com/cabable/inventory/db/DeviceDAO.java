@@ -16,7 +16,7 @@ public class DeviceDAO extends ContextAwareDAO<Device>{
     }
 
     public Optional<Device> findById(Long imei) {
-        return Optional.ofNullable(get(imei));
+        return Optional.ofNullable(list(namedQuery("Device.get").setLong("imei", imei)).get(0));
     }
 
     public Device create(Device device) {
@@ -30,7 +30,7 @@ public class DeviceDAO extends ContextAwareDAO<Device>{
     public int delete(Device device){
     	Query query =  namedQuery("Device.delete");
     	query.setLong("imei", device.getImei());
-    	query.setLong("operator_id", device.getOperator_id());
+    	query.setLong("operator_id", this.getUser().getOperator_id());
     	return query.executeUpdate();
     }
 
