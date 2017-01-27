@@ -13,7 +13,7 @@ database:
     # the password
     password: eros@123
    # the JDBC URL
-    url: jdbc:mysql://104.199.218.25:3306/inventory
+    url: jdbc:mysql://104.155.136.250:3306/inventory
 
      # any properties specific to your JDBC driver:
     properties:
