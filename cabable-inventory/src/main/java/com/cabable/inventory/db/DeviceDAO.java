@@ -1,5 +1,6 @@
 package com.cabable.inventory.db;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +20,8 @@ public class DeviceDAO extends ContextAwareDAO<Device>{
         return Optional.ofNullable(list(namedQuery("Device.get").setLong("imei", imei)).get(0));
     }
 
-    public Device create(Device device) {
-        return persist(device);
+    public Serializable create(Device device) {
+        return save(device);
     }
     
     public Device update(Device device) {

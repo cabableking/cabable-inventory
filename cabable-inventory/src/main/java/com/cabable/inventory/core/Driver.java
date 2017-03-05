@@ -10,7 +10,6 @@ import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 
 
 @Entity
@@ -57,8 +56,8 @@ public class Driver extends ContextAwareEntity{
 	@Column 
 	private boolean     is_assigned ; 
 	
-	@Column 
-	private long     contact_num ; 
+	@Column
+	private Long     contact_num ; 
 	
 	
 	@Column
@@ -152,22 +151,12 @@ public class Driver extends ContextAwareEntity{
 		this.is_assigned = is_assigned;
 	}
 
-	public long getContact_num() {
+	public Long getContact_num() {
 		return contact_num;
 	}
 
-	public void setContact_num(long contact_num) {
+	public void setContact_num(Long contact_num) {
 		this.contact_num = contact_num;
-	}
-
-	@Column(nullable=false, columnDefinition = "UNSIGNED INT(11)")
-	@Min(1)
-	public long getOperator_id() {
-		return operator_id;
-	}
-
-	public void setOperator_id(long operator_id) {
-		this.operator_id = operator_id;
 	}
 
 	@Override

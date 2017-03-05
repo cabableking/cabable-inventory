@@ -1,6 +1,7 @@
 package com.cabable.inventory.resources;
 
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -45,7 +46,7 @@ public class DeviceResource {
 	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
-	    public Device create(@Auth User user,Device device) {
+	    public Serializable create(@Auth User user,Device device) {
 	    	LOGGER.info("Returning:" +  device ) ;
     		DAOUtils.contextualizeDAO(user, dao);
 	        return dao.create(device);

@@ -1,6 +1,7 @@
 package com.cabable.inventory.resources;
 
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -45,7 +46,8 @@ public class DriverResource {
 	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
-	    public Driver create(@Auth User user, Driver Driver) {
+	    public Serializable create(@Auth User user, Driver Driver) {
+    		DAOUtils.contextualizeDAO(user, dao);
 	        return dao.create(Driver);
 	    }
 
@@ -56,6 +58,7 @@ public class DriverResource {
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Driver update(@Auth User user,Driver Driver) {
+    		DAOUtils.contextualizeDAO(user, dao);
 	    	LOGGER.info("Updating:" +  Driver ) ;
 	        return dao.update(Driver);
 	    }

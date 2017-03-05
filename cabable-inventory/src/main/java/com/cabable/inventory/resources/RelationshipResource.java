@@ -100,7 +100,7 @@ public class RelationshipResource {
 	    }
 	    
 	    @PUT
-	    @Path("get")
+	    @Path("add")
 	    @Timed(name = "post-get-device")
 	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork

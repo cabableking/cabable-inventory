@@ -1,6 +1,7 @@
 	package com.cabable.inventory.resources;
 
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -51,7 +52,7 @@ public class RateCardResource {
 	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
-	    public RateCard create(@Auth User user,RateCard rc) {
+	    public Serializable create(@Auth User user,RateCard rc) {
 	    	LOGGER.info("Returning:" +  rc ) ;
     		DAOUtils.contextualizeDAO(user, dao);
 	        return dao.create(rc);
@@ -92,6 +93,7 @@ public class RateCardResource {
 	    @UnitOfWork
 	    public List<RateCard> get(@Auth User user,RateCard ratecard) {
 	    		DAOUtils.contextualizeDAO(user, dao);
+	    		if(ratecard==null) return dao.getAll();
 		        return dao.getAll(ratecard);
 	    }
 	    

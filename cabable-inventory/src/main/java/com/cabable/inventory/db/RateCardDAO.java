@@ -1,5 +1,6 @@
 package com.cabable.inventory.db;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,9 +19,9 @@ public class RateCardDAO extends ContextAwareDAO<RateCard>{
         return Optional.ofNullable(get(id));
     }
 
-    public RateCard create(RateCard rc) {
+    public Serializable create(RateCard rc) {
     	rc.setOperator_id(this.getUser().getOperator_id());
-        return persist(rc);
+        return save(rc);
     }
     
     public RateCard update(RateCard rc) {
@@ -34,9 +35,16 @@ public class RateCardDAO extends ContextAwareDAO<RateCard>{
     	return query.executeUpdate();
     }
 
+    public List<RateCard> getAll() {
+    	return list(namedQuery("RateCard.getAll"));
+    }
+    
     public List<RateCard> getAll(RateCard rc) {
     	Criteria criteria = criteria();
-    	DAOUtils.addRestrictionIfNotNull(criteria, "id", rc.getRate_card_id());
+    	DAOUtils.addRestrictionIfNotNull(criteria, "id", (rc!=null)?rc.getRate_card_id():null);
+    	DAOUtils.addRestrictionIfNotNull(criteria, "plan_id", (rc!=null)?rc.getPlan_id():null);
+    	DAOUtils.addRestrictionIfNotNull(criteria, "rcname", (rc!=null)?rc.getName():null);
+    	DAOUtils.addRestrictionIfNotNull(criteria, "operator_id", getUser().getOperator_id());
     	return list(criteria);
     }
 

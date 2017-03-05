@@ -1,5 +1,6 @@
 package com.cabable.inventory.db;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,8 +20,8 @@ public class DriverDAO extends ContextAwareDAO<Driver>{
         return Optional.ofNullable(list(namedQuery("Driver.get").setString("driver_license_no", id)).get(0));
     }
 
-    public Driver create(Driver driver) {
-        return persist(driver);
+    public Serializable create(Driver driver) {
+        return save(driver);
     }
     
     public Driver update(Driver driver) {

@@ -24,7 +24,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Table(name="ratecardoperatormap")
 @JsonIgnoreProperties(ignoreUnknown=true)
 @NamedQueries({
-	@NamedQuery(name="RateCard.delete", query="delete from RateCard r where id=:rate_card_id and operator_id=:operator_id")
+	@NamedQuery(name="RateCard.delete", query="delete from RateCard r where id=:rate_card_id and operator_id=:operator_id"),
+	@NamedQuery(name="RateCard.getAll", query="select r from RateCard r where operator_id=:operator_id")
+	
 })
 public class RateCard extends ContextAwareEntity{
 

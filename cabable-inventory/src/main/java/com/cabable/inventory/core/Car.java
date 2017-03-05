@@ -1,14 +1,11 @@
 package com.cabable.inventory.core;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
-import javax.validation.constraints.Min;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -54,22 +51,10 @@ public class Car extends ContextAwareEntity{
 	@Column
 	private boolean is_assigned;
 	
-	@Column
-	@Min(1)
-	private long operator_id;
-	
 	@Column 
 	private PCategory parent_category;
 	
 	
-	public long getOperator_id() {
-		return operator_id;
-	}
-
-	public void setOperator_id(long operator_id) {
-		this.operator_id = operator_id;
-	}
-
 	public void setStates_permit_map(long states_permit_map) {
 		this.states_permit_map = states_permit_map;
 	}

@@ -1,10 +1,24 @@
 package com.cabable.inventory.core;
 
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.MappedSuperclass;
+import javax.validation.constraints.Min;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
-public class ContextAwareEntity {
+@MappedSuperclass
+public class ContextAwareEntity implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	@Column
+	@Min(1)
 	protected long operator_id;
 
 	public long getOperator_id() {
