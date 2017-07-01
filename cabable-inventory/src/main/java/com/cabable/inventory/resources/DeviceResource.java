@@ -43,7 +43,6 @@ public class DeviceResource {
 	    @POST
 	    @Path("create")
 	    @Timed(name = "post-create-device")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Serializable create(@Auth User user,Device device) {
@@ -55,7 +54,6 @@ public class DeviceResource {
 	    @POST
 	    @Path("update")
 	    @Timed(name = "post-update-device")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Device update(@Auth User user,Device device) {
@@ -68,7 +66,6 @@ public class DeviceResource {
 	    @DELETE
 	    @Path("delete")
 	    @Timed(name = "post-delete-device")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public String delete(@Auth User user, @QueryParam("imei") long imei) {
@@ -82,7 +79,6 @@ public class DeviceResource {
 	    @GET
 	    @Path("get")
 	    @Timed(name = "post-get-device")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public Device get(@Auth User user,@QueryParam("imei") long imei) {
 	    		Device device = new Device();
@@ -94,7 +90,6 @@ public class DeviceResource {
 	    @GET
 	    @Path("getAll")
 	    @Timed(name = "post-get-device")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public List<Device> get(@Auth User user) {
     		DAOUtils.contextualizeDAO(user, dao);

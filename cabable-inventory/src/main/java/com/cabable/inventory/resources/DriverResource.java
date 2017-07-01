@@ -43,7 +43,6 @@ public class DriverResource {
 	    @POST
 	    @Path("create")
 	    @Timed(name = "get-requests")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Serializable create(@Auth User user, Driver Driver) {
@@ -54,7 +53,6 @@ public class DriverResource {
 	    @POST
 	    @Path("update")
 	    @Timed(name = "post-update-Driver")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Driver update(@Auth User user,Driver Driver) {
@@ -66,7 +64,6 @@ public class DriverResource {
 	    @DELETE
 	    @Path("delete")
 	    @Timed(name = "post-delete-Driver")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public String delete(@Auth User user,@QueryParam("driver_license_no") String driver_license_no) {
@@ -80,7 +77,6 @@ public class DriverResource {
 	    @GET
 	    @Path("get")
 	    @Timed(name = "post-get-Driver")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public Driver get(@Auth User user,@QueryParam("driver_license_no") String driver_license_no) {
 	    		Driver Driver = new Driver();
@@ -92,7 +88,6 @@ public class DriverResource {
 	    @GET
 	    @Path("getAll")
 	    @Timed(name = "post-get-Driver")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public List<Driver> get(@Auth User user) {
     		DAOUtils.contextualizeDAO(user, dao);

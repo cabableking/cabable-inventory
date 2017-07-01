@@ -49,7 +49,6 @@ public class CarResource {
 	    @POST
 	    @Path("create")
 	    @Timed(name = "get-requests")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Serializable createcar(@Auth User user,Car car) {
@@ -64,7 +63,6 @@ public class CarResource {
 	    @POST
 	    @Path("update")
 	    @Timed(name = "post-update-Car")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Car update(@Auth User user,Car Car) {
@@ -79,7 +77,6 @@ public class CarResource {
 	    @DELETE
 	    @Path("delete")
 	    @Timed(name = "post-delete-Car")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public String delete(@Auth User user,@QueryParam("car_reg_id") String car_reg_id) {
@@ -93,7 +90,6 @@ public class CarResource {
 	    @GET
 	    @Path("get")
 	    @Timed(name = "post-get-Car")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public Car get(@Auth User user,@QueryParam("car_reg_id") String car_reg_id) {
 	    		Car Car = new Car();
@@ -105,7 +101,6 @@ public class CarResource {
 	    @GET
 	    @Path("getAll")
 	    @Timed(name = "post-get-Car")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public List<Car> get(@Auth User user) {
     		DAOUtils.contextualizeDAO(user, dao);

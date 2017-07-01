@@ -1,13 +1,29 @@
 package com.cabable.inventory;
 
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.EnumSet;
+import java.util.Locale;
 import java.util.Map;
+import java.util.TimeZone;
 
 import javax.servlet.DispatcherType;
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
 import javax.servlet.FilterRegistration;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.servlets.CrossOriginFilter;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
@@ -60,7 +76,7 @@ import io.dropwizard.setup.Environment;
 import io.dropwizard.views.ViewBundle;
 
 public class CabableApplication extends Application<CabableConfiguration> {
-	
+
 	Logger LOGGER = Logger.getLogger(CabableApplication.class);
 
 	public static void main(String[] args) throws Exception {
@@ -112,25 +128,27 @@ public class CabableApplication extends Application<CabableConfiguration> {
 
 	@Override
 	public void run(CabableConfiguration configuration, Environment environment) {
-		
+
+		this.setCacheHeaders(environment, "/*", 86400);
+
 		// Enable CORS headers
-	    final FilterRegistration.Dynamic cors =
-	        environment.servlets().addFilter("CORS", CrossOriginFilter.class);
+		final FilterRegistration.Dynamic cors =
+				environment.servlets().addFilter("CORS", CrossOriginFilter.class);
 
-	    // Configure CORS parameters
-	    cors.setInitParameter("allowedOrigins", "*");
-	    cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
-	    cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
+		// Configure CORS parameters
+		cors.setInitParameter("allowedOrigins", "*");
+		cors.setInitParameter("allowedHeaders", "X-Requested-With,Content-Type,Accept,Origin");
+		cors.setInitParameter("allowedMethods", "OPTIONS,GET,PUT,POST,DELETE,HEAD");
 
-	    // Add URL mapping
-	    cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
-	    
+		// Add URL mapping
+		cors.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, "/*");
+
 		//initialize redis 
 		final OAuthRedisDAO redisDAO = new OAuthRedisDAO(configuration.getRedis());
 		if(!redisDAO.initializeScopes()){
 			throw new WebApplicationException("Not able to initialize scopes on redis");
 		}
-		
+
 		//initialize other DAOs
 		final CarDAO dao = new CarDAO(hibernateBundle.getSessionFactory());
 		final OperatorDAO opDao = new OperatorDAO(hibernateBundle.getSessionFactory());
@@ -141,10 +159,10 @@ public class CabableApplication extends Application<CabableConfiguration> {
 		final RateCardDAO rcDao = new RateCardDAO(hibernateBundle.getSessionFactory());
 		final PlanDAO planDao = new PlanDAO(hibernateBundle.getSessionFactory());
 
-		
+
 		//initialize oauthclient
 		OAuthClient oauthClient = new UnitOfWorkAwareProxyFactory(hibernateBundle)
-		                    .create(OAuthClient.class, new Class[]{String.class, UserDAO.class}, new Object[]{configuration.getOauthURL(), userDao});
+				.create(OAuthClient.class, new Class[]{String.class, UserDAO.class}, new Object[]{configuration.getOauthURL(), userDao});
 
 		//register scopes
 		for(Role role: Role.values()){
@@ -160,7 +178,7 @@ public class CabableApplication extends Application<CabableConfiguration> {
 				LOGGER.info("Scope added");
 			}
 		}
-		
+
 		environment.jersey().register(DateRequiredFeature.class);
 
 		environment.jersey().register(new CabableAuthDynamicFeature(
@@ -182,5 +200,50 @@ public class CabableApplication extends Application<CabableConfiguration> {
 		environment.jersey().register(new RelationshipResource(relDao));
 		environment.jersey().register(new RateCardResource(rcDao, planDao));
 
+	}
+
+ protected void setCacheHeaders(Environment environment, String urlPattern, int seconds) {
+		FilterRegistration.Dynamic filter = environment.servlets().addFilter(
+				"cacheControlFilter",
+				new Filter() {
+					@Override
+					public void init(FilterConfig filterConfig) throws ServletException {
+
+					}
+
+					@Override
+					public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+
+						HttpServletRequest httpServletRequest = (HttpServletRequest) servletRequest;
+						HttpServletResponse httpServletResponse = (HttpServletResponse) servletResponse;
+
+						String[] cacheFileTypes = {"js","css","png","jpg","gif","svg", "html"};
+						String filetypeRequested = FilenameUtils.getExtension(httpServletRequest.getRequestURL().toString());
+
+						if (httpServletRequest.getMethod() == "GET" && seconds > 0 && Arrays.asList(cacheFileTypes).contains(filetypeRequested)) {
+							httpServletResponse.setHeader("Cache-Control", "public, max-age=" + seconds);
+							Calendar c = Calendar.getInstance();
+							c.setTime(new Date());
+							c.add(Calendar.SECOND, seconds);
+							SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss zzz", Locale.US);
+							format.setTimeZone(TimeZone.getTimeZone("GMT"));
+							httpServletResponse.setHeader("Expires", format.format(c.getTime()));
+						} else {
+							httpServletResponse.setHeader("Cache-Control", "no-cache, no-store, must-revalidate, no-transform");
+							httpServletResponse.setHeader("Expires", "0");
+							httpServletResponse.setHeader("Pragma", "no-cache");
+						}
+
+						filterChain.doFilter(servletRequest, servletResponse);
+
+					}
+
+					@Override
+					public void destroy() {
+
+					}
+				}
+				);
+		filter.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), true, urlPattern);
 	}
 }

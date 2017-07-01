@@ -45,7 +45,6 @@ public class RelationshipResource {
 	    @PUT
 	    @Path("startonboarding")
 	    @Timed(name = "post-create-device")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Serializable startonboarding(@Auth User user) {
@@ -62,7 +61,6 @@ public class RelationshipResource {
 	    @Path("update")
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    @Timed(name = "post-update-device")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public Relationship update(@Auth User user,Relationship rel) {
 	    	if(rel.getId()==0){
@@ -76,7 +74,6 @@ public class RelationshipResource {
 	    @DELETE
 	    @Path("delete")
 	    @Timed(name = "post-delete-rel")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public String delete(@QueryParam("id") int id, @Auth User user) {
@@ -90,7 +87,6 @@ public class RelationshipResource {
 	    @GET
 	    @Path("get")
 	    @Timed(name = "post-get-device")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public List<Relationship> get(Relationship rel ,@Auth User user) {
@@ -102,7 +98,6 @@ public class RelationshipResource {
 	    @PUT
 	    @Path("add")
 	    @Timed(name = "post-get-device")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public List<Relationship> add(Relationship rel ,@Auth User user) {

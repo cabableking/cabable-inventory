@@ -65,7 +65,6 @@ public class OperatorResource {
 	    @POST
 	    @Path("create")
 	    @Timed(name = "get-requests")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"SUPERADMIN"})
 	    @Consumes(MediaType.MULTIPART_FORM_DATA)
@@ -151,7 +150,6 @@ public class OperatorResource {
 	    @POST	
 	    @Path("update")
 	    @Timed(name = "post-update-Operator")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Operator update(@Auth User user,Operator Operator) {
@@ -163,7 +161,6 @@ public class OperatorResource {
 	    @DELETE
 	    @Path("delete")
 	    @Timed(name = "post-delete-Operator")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"SUPERADMIN"})
 	    public String delete(@Auth User user,@QueryParam("id") int id) {
@@ -177,7 +174,6 @@ public class OperatorResource {
 	    @GET
 	    @Path("get")
 	    @Timed(name = "post-get-Operator")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @RolesAllowed({"SUPERADMIN"})
 	    @UnitOfWork
 	    public Operator get(@Auth User user,@QueryParam("id") long id) {
@@ -191,7 +187,6 @@ public class OperatorResource {
 	    @Path("getAll")
 	    @RolesAllowed({"SUPERADMIN", "ADMIN"})
 	    @Timed(name = "post-get-Operator")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public List<Operator> get(@Auth User user) {
     		DAOUtils.contextualizeDAO(user, dao);
@@ -201,7 +196,6 @@ public class OperatorResource {
 	    @PUT
 	    @Path("activateUser")
 	    @Timed(name = "post-put-activateoperator")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"SUPERADMIN"})	    
 	    @Produces(MediaType.APPLICATION_JSON)

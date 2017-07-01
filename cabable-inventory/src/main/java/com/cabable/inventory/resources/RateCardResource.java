@@ -49,7 +49,6 @@ public class RateCardResource {
 	    @POST
 	    @Path("create")
 	    @Timed(name = "post-create-rc")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public Serializable create(@Auth User user,RateCard rc) {
@@ -61,7 +60,6 @@ public class RateCardResource {
 	    @POST
 	    @Path("update")
 	    @Timed(name = "post-update-rc")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public RateCard update(@Auth User user,RateCard rc) {
@@ -74,7 +72,6 @@ public class RateCardResource {
 	    @DELETE
 	    @Path("delete")
 	    @Timed(name = "post-delete-rc")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    @RolesAllowed({"ADMIN","SUPERADMIN"})
 	    public String delete(@Auth User user, @QueryParam("rate_card_id") long rate_card_id) {
@@ -89,7 +86,6 @@ public class RateCardResource {
 	    @GET
 	    @Path("get")
 	    @Timed(name = "post-get-rc")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public List<RateCard> get(@Auth User user,RateCard ratecard) {
 	    		DAOUtils.contextualizeDAO(user, dao);
@@ -100,7 +96,6 @@ public class RateCardResource {
 	    @GET
 	    @Path("plans")
 	    @Timed(name = "post-get-plan")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public List<Plan> plans(@Auth User user, @QueryParam(value="plantype") PlanType planname) {
 		        return plandao.get(planname);
@@ -109,7 +104,6 @@ public class RateCardResource {
 	    @GET
 	    @Path("plannames")
 	    @Timed(name = "post-getNames-planO")
-	    @CacheControl(maxAge = 1, maxAgeUnit = TimeUnit.DAYS)
 	    @UnitOfWork
 	    public List<PlanType> plannames(@Auth User user) {
 		        return Arrays.asList(PlanType.values());
