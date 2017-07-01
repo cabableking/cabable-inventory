@@ -25,9 +25,7 @@ public class PlanDAO extends AbstractDAO<Plan>{
     }
     
     public List<Plan> get(PlanType planname) {
-    	Criteria criteria = criteria();
-    	DAOUtils.addRestrictionIfNotNull(criteria, "type", planname);
-    	return list(criteria);
+        return (list(namedQuery("Plan.get").setString("type", planname.toString())));
     }
 
 }
