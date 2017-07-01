@@ -11,9 +11,9 @@ database:
     # the username
     user: root
     # the password
-    password: eros@123
+    password: cabable@123
    # the JDBC URL
-    url: jdbc:mysql://104.155.136.250:3306/inventory
+    url: jdbc:mysql://35.194.140.221:3306/inventory
 
      # any properties specific to your JDBC driver:
     properties:
@@ -114,11 +114,11 @@ viewRendererConfiguration:
 
 
 redis:
-  url: 35.166.10.251
-  username:
-  password:
+  url: 35.189.187.134
+  username: root
+  password: cabable@123
 
-oauthURL: http://52.77.220.58:8088
+oauthURL: http://52.66.49.39:8080
 
 
 
