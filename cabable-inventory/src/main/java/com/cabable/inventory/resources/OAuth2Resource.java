@@ -36,7 +36,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import org.apache.commons.lang3.RandomUtils;
-import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -47,6 +46,7 @@ import com.apifest.client.OAuthScope;
 import com.apifest.client.OAuthScopeResponse;
 import com.apifest.client.OAuthTokenResponse;
 import com.apifest.client.OAuthTokenRevocationRequest;
+import com.apifest.client.OAuthTokenRevocationResponse;
 import com.apifest.client.TokenRequest;
 import com.apifest.client.TokenValidationResponse;
 import com.cabable.inventory.IgnoreOAuthFilter;
@@ -213,8 +213,8 @@ public class OAuth2Resource {
 		OAuthTokenRevocationRequest req = new OAuthTokenRevocationRequest();
 		req.setAccess_token(accessToken);
 		req.setClient_id(user.getClient_id());
-		JSONObject resp = client.removeToken(req);
-		return resp.get("revoked").toString();
+		OAuthTokenRevocationResponse resp = client.removeToken(req);
+		return resp.getRevoked();
 	}
 	
 	@Path("/changepassword")

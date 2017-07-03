@@ -71,7 +71,7 @@ public interface OAuthServer {
     Response validateToken(@QueryParam("token") String token);
     
     @Path("/tokens/revoke")
-    @GET
+    @POST
     @Produces(MediaType.APPLICATION_JSON)
     Response revokeToken(OAuthTokenRevocationRequest request);
 

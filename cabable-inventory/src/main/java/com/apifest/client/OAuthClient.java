@@ -93,11 +93,11 @@ public class OAuthClient {
         return response.readEntity(TokenValidationResponse.class);
     }
     
-    public JSONObject removeToken(OAuthTokenRevocationRequest request) {
+    public OAuthTokenRevocationResponse removeToken(OAuthTokenRevocationRequest request) {
         ResteasyClient client = new ResteasyClientBuilder().build();
         ResteasyWebTarget target = client.target(oauthUrl);
         Response response = target.proxy(OAuthServer.class).revokeToken(request);
-        return response.readEntity(JSONObject.class);
+        return response.readEntity(OAuthTokenRevocationResponse.class);
     }
     
     
