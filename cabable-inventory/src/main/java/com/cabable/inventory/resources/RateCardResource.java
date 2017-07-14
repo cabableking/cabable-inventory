@@ -83,7 +83,7 @@ public class RateCardResource {
 	        return "Deleted " + dao.delete(rc) + "Instances";
 	    }
 	    
-	    @GET
+	    @POST
 	    @Path("get")
 	    @Timed(name = "post-get-rc")
 	    @UnitOfWork
