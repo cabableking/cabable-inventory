@@ -94,6 +94,18 @@ public class RateCardResource {
 	    }
 	    
 	    @GET
+	    @Path("get")
+	    @Timed(name = "post-get-rc")
+	    @UnitOfWork
+	    public List<RateCard> get(@Auth User user,@QueryParam("rate_card_id") long ratecardid) {
+	    		DAOUtils.contextualizeDAO(user, dao);
+	    		if(ratecardid==0) return dao.getAll();
+	    		RateCard mockrc = new RateCard();
+	    		mockrc.setRate_card_id(ratecardid);
+		        return dao.getAll(mockrc);
+	    }
+	    
+	    @GET
 	    @Path("plans")
 	    @Timed(name = "post-get-plan")
 	    @UnitOfWork
